@@ -1,0 +1,19 @@
+﻿@model PartyInvites.Models.GuestResponse
+
+@{
+	Layout = "_Layout";
+	ViewData["Title"] = "Thank you";
+}
+
+<p class="text-center">
+	<h1>Thank you, @Model.Name!</h1>
+	@if (Model.WillAttend == true)
+	{
+		@:It's great that you're coming. Check your email with all the necessary items you have to bring.
+	}
+	else
+	{
+		@:Sorry to hear that you can't make it, but thanks for letting us know.
+	}
+</p>
+	Click <a class="nav-link" asp-action="ListResponses">here</a> to see a complete list of all responses.

@@ -1,0 +1,59 @@
+﻿@{
+	Layout = "_Layout";
+	ViewData["Title"] = "Attendees";
+
+	int count = 0;
+}
+
+<div class="panel-body">
+	<h2>Here is the list of people's responses</h2>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>Address</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (PartyInvites.Models.GuestResponse r in Model)
+			{
+				count++;
+
+				//A double inline if-statement is certainly not the most elegant solution but it works and looks impressive. That counts, right?
+				//Nullable bool should have value (otherwise "" returned). Depending on true or false respectively bg-success or bg-danger is returned.
+				<tr @(r.WillAttend.HasValue ? ((bool)r.WillAttend ? "class=bg-success" : "class=bg-danger") : "")>
+					<td>@r.Name</td>
+					<td>@r.Email</td>
+					<td>@r.Phone</td>
+					<td>@r.Address</td>
+					<td>
+						@{
+							if (r.WillAttend.HasValue)
+							{
+								//The nullable bool WillAttend has a true or false value; it's safe to cast it to a bool
+								@Html.Raw((bool)r.WillAttend ? "Attending" : "Not attending")
+								;
+								;
+							}
+							else
+							{
+								//The nullable bool WillAttend is null, so something weird happened.
+								@Html.Raw("Unknown")
+								;
+							}
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	@if (count == 0)
+	{
+		//If there's no responses, count will be 0 and this text will let the viewer know there are no responses yet.
+		<h3>No responses so far. Be the first one!</h3>
+	}
+</div>

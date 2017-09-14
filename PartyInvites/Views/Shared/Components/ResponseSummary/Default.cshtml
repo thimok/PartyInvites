@@ -1,0 +1,7 @@
+﻿@model PartyInvites.Models.IRepository
+
+<div>
+	<p>Total responses: @Model.GetAllResponses().Count()</p>
+	<p>Total attendees: @Model.GetAllResponses().Count(r => (r.WillAttend.HasValue) && (bool)(r.WillAttend))</p>
+	<a class="btn btn-sm btn-default navbar-btn" asp-controller="Home" asp-action="ListResponses">View a list of attendees</a>
+</div>
